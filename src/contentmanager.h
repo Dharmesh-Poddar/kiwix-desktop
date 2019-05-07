@@ -36,7 +36,7 @@ private:
     QString m_currentLanguage;
     QString m_searchQuery;
     QString m_categoryFilter = "all";
-
+    kiwix::supportedListSortBy m_sortBy = kiwix::UNSORTED;
 
     QStringList getBookIds();
     void eraseBookFilesFromComputer(const QString fileSelection);
@@ -55,6 +55,7 @@ public slots:
     QString downloadBook(const QString& id);
     void updateLibrary();
     void setSearch(const QString& search);
+    void setSortBy(const QString& sortBy);
     void eraseBook(const QString& id);
     void updateRemoteLibrary(const QString& content);
     void pauseBook(const QString& id);

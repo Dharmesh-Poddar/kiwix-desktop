@@ -298,11 +298,31 @@ void ContentManager::setSearch(const QString &search)
     emit(booksChanged());
 }
 
+void ContentManager::setSortBy(const QString& sortBy)
+{
+    if (sortBy == "unsorted") {
+        m_sortBy = kiwix::UNSORTED;
+    } else if (sortBy == "title-asc") {
+        m_sortBy = kiwix::TITLE_ASC;
+    } else if (sortBy == "title-desc") {
+        m_sortBy = kiwix::TITLE_DESC;
+    } else if (sortBy == "size-asc") {
+        m_sortBy = kiwix::SIZE_ASC;
+    } else if (sortBy == "size-desc") {
+        m_sortBy = kiwix::SIZE_DESC;
+    } else if (sortBy == "date-asc") {
+        m_sortBy = kiwix::DATE_ASC;
+    } else if (sortBy == "date-desc") {
+        m_sortBy = kiwix::DATE_DESC;
+    }
+    emit(booksChanged());
+}
+
 QStringList ContentManager::getBookIds() {
     if (m_local) {
-        return mp_library->listBookIds(m_searchQuery, m_categoryFilter);
+        return mp_library->listBookIds(m_searchQuery, m_categoryFilter, m_sortBy);
     } else {
-        auto bookIds = m_remoteLibrary.listBooksIds(kiwix::REMOTE, kiwix::UNSORTED,
+        auto bookIds = m_remoteLibrary.listBooksIds(kiwix::REMOTE, m_sortBy,
                                                     m_searchQuery.toStdString());
         QStringList list;
         for(auto& bookId:bookIds) {
