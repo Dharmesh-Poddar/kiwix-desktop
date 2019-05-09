@@ -13,11 +13,18 @@ WebView::WebView(QWidget *parent)
     auto profile = page()->profile();
     auto app = KiwixApp::instance();
     profile->installUrlSchemeHandler("zim", app->getSchemeHandler());
+    m_keyAltHome = new QShortcut(this);
+    m_keyAltHome->setKey(Qt::ALT + Qt::Key_Home);
+    connect(m_keyAltHome, SIGNAL(activated()), this, SLOT(openHomePage()));
     QObject::connect(this, &QWebEngineView::urlChanged, this, &WebView::onUrlChanged);
 }
 
 WebView::~WebView()
 {}
+
+void WebView::openHomePage() {
+    setUrl("zim://" + m_currentZimId + ".zim/");
+}
 
 bool WebView::isWebActionEnabled(QWebEnginePage::WebAction webAction) const
 {

@@ -3,6 +3,7 @@
 
 #include <QWebEngineView>
 #include <QIcon>
+#include <QShortcut>
 
 #include <kiwix/reader.h>
 
@@ -22,6 +23,7 @@ public:
 
 public slots:
     void onUrlChanged(const QUrl& url);
+    void openHomePage();
 
 signals:
     void iconChanged(const QIcon& icon);
@@ -31,6 +33,7 @@ protected:
     virtual QWebEngineView* createWindow(QWebEnginePage::WebWindowType type);
     QString m_currentZimId;
     QIcon m_icon;
+    QShortcut*          m_keyAltHome;
 };
 
 #endif // WEBVIEW_H
