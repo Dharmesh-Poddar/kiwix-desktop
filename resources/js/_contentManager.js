@@ -45,7 +45,8 @@ function getDownloadInfo(id) {
       Vue.delete(app.downloads, id);
       return;
     }
-    Vue.set(app.downloads, id, createDict(DOWNLOAD_KEYS, values));
+    d["completedLengthInDegree"] = Math.trunc(d["completedLength"] * 180 / d["totalLength"]).toString() + "deg";
+    Vue.set(app.downloads, id, d);
   });
 }
 
@@ -85,11 +86,12 @@ function init() {
         eraseBook : function(book) {
             contentManager.eraseBook(book.id);
         },
-        pauseBook : function(book) {
-          contentManager.pauseBook(book.id);
-        },
-        resumeBook : function(book) {
-          contentManager.resumeBook(book.id);
+        pauseResumeBook : function(book) {
+            if (app.downloads[book.id].status == 'active') {
+                contentManager.pauseBook(book.id);
+            } else if (app.downloads[book.id].status == 'paused') {
+                contentManager.resumeBook(book.id);
+            }
         },
         cancelBook : function(book) {
             contentManager.cancelBook(book.id);
