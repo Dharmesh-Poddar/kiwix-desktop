@@ -63,6 +63,14 @@ SearchBar::SearchBar(QWidget *parent) :
     setPlaceholderText(tr("Search"));
     m_completer.setCompletionMode(QCompleter::UnfilteredPopupCompletion);
     setCompleter(&m_completer);
+
+    QFile styleFile(":/css/popup.css");
+    styleFile.open(QIODevice::ReadOnly);
+    auto byteContent = styleFile.readAll();
+    styleFile.close();
+    QString style(byteContent);
+    m_completer.popup()->setStyleSheet(style);
+
     connect(this, &QLineEdit::textEdited, this, &SearchBar::updateCompletion);
 #if 0 //The `activated` signal seems to not be emitted if user navigate in the page.
       // Something is broken here .. :/
