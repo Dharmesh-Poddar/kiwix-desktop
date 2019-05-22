@@ -4,6 +4,7 @@
 #include <QWebEngineView>
 #include <QIcon>
 #include <QShortcut>
+#include <QWheelEvent>
 
 #include <kiwix/reader.h>
 
@@ -31,6 +32,8 @@ signals:
 
 protected:
     virtual QWebEngineView* createWindow(QWebEnginePage::WebWindowType type);
+    void wheelEvent(QWheelEvent *event);
+    
     QString m_currentZimId;
     QIcon m_icon;
     QShortcut*          m_keyAltHome;
